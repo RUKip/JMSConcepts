@@ -5,6 +5,7 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.naming.NamingException;
 
 public class Requestor {
     private Session session;
@@ -47,14 +48,10 @@ public class Requestor {
         requestMessage.setJMSReplyTo(replyQueue);
         requestProducer.send(requestMessage);
         System.out.println("Sent request");
-        System.out.println("\tTime: " + System.currentTimeMillis() + "
-                ms");
-                System.out.println("\tMessage ID: " +
-                        requestMessage.getJMSMessageID());
-        System.out.println("\tCorrel. ID: " +
-                requestMessage.getJMSCorrelationID());
-        System.out.println("\tReply to: " +
-                requestMessage.getJMSReplyTo());
+        System.out.println("\tTime: " + System.currentTimeMillis() + "ms");
+        System.out.println("\tMessage ID: " + requestMessage.getJMSMessageID());
+        System.out.println("\tCorrel. ID: " + requestMessage.getJMSCorrelationID());
+        System.out.println("\tReply to: " + requestMessage.getJMSReplyTo());
         System.out.println("\tContents: " + requestMessage.getText());
     }
 
