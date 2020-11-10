@@ -1,10 +1,4 @@
-import javax.jms.Connection;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
+import javax.jms.*;
 import javax.naming.NamingException;
 
 public class Requestor {
@@ -18,12 +12,17 @@ public class Requestor {
         super();
     }
 
-    public static Requestor newRequestor(Connection connection, String
-            requestQueueName,
-                                         String replyQueueName, String invalidQueueName)
-            throws JMSException, NamingException {
+    public static Requestor newRequestor(
+            Connection connection,
+            String requestQueueName,
+            String replyQueueName,
+            String invalidQueueName
+    ) throws JMSException, NamingException {
         Requestor requestor = new Requestor();
-        requestor.initialize(connection, requestQueueName, replyQueueName,
+        requestor.initialize(
+                connection,
+                requestQueueName,
+                replyQueueName,
                 invalidQueueName);
         return requestor;
     }
