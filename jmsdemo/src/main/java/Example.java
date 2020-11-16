@@ -16,19 +16,28 @@ public class Example {
             Queue queue = (Queue) initialContext.lookup("testqueue");
 
             JMSContext jmsContext = connectionFactory.createContext();
+            JMSConsumer consumer = jmsContext.createConsumer(queue);
+            consumer.setMessageListener(new MessageListener() {
+                public void onMessage(Message message) {
+                    try {
+                        System.out.println(message.getBody(String.class));
+                    } catch (JMSException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             //Producer
-            TextMessage textMessage = jmsContext.createTextMessage("Hello world");
+            TextMessage textMessage = jmsContext.createTextMessage("Hello");
+            TextMessage textMessage2 = jmsContext.createTextMessage("World");
+
             jmsContext.createProducer().send(queue, textMessage);
+            jmsContext.createProducer().send(queue, textMessage2);
 
-
-            //Consumer
-            TextMessage message = (TextMessage) jmsContext.createConsumer(queue).receive();
-            System.out.println(message.getText());
+            consumer.close();
 
         }catch (Exception e){
             System.out.println("Something went wrong :(  " + e.getMessage() );
         }
-
     }
 }
